@@ -2,13 +2,13 @@ require('dotenv').config();
 const express = require('express');
 const sqlite3 = require('sqlite3').verbose();
 const cors = require('cors');
-const { GoogleGenerativeAI } = require('@google/generative-ai');
+const Groq = require('groq-sdk');
 
 const app = express();
 app.use(express.json());
 app.use(cors());
 
-const ai = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+const ai = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
 const db = new sqlite3.Database('./database.sqlite', (err) => {
     if (err) console.error(err.message);
@@ -42,14 +42,17 @@ app.post('/api/excuse', async (req, res) => {
                 if (count >= 4) absurdity = "completely ridiculous, absurd, and unbelievable (like a flock of pigeons hijacking an auto-rickshaw)";
 
                 try {
-                    const model = ai.getGenerativeModel({ model: "gemini-3.5-flash" });
-                    const prompt = `Generate a unique, single-sentence excuse for being late or missing a deadline. 
-                    The tone should be ${absurdity}. 
-                    CRITICAL: Do not repeat any of these previous excuses: [${history.join(', ')}]. 
-                    Return ONLY the excuse string, nothing else.`;
+                   const prompt = `Generate a unique, single-sentence excuse for being late or missing a deadline. 
+                   The tone should be ${absurdity}. 
+                   CRITICAL: Do not repeat any of these previous excuses: [${history.join(', ')}]. 
+                   Return ONLY the excuse string, nothing else.`;
 
-                    const result = await model.generateContent(prompt);
-                    const newExcuse = result.response.text().trim();
+                    const chatCompletion = await ai.chat.completions.create({
+                        messages: [{ role: "user", content: prompt }],
+                        model: "llama-3.1-8b-instant", 
+                    });
+
+                    const newExcuse = chatCompletion.choices[0]?.message?.content.trim();
 
                     db.run(`INSERT INTO excuses (user_id, excuse, absurdity) VALUES (?, ?, ?)`, [userId, newExcuse, absurdity], () => {
                         res.json({
@@ -59,8 +62,7 @@ app.post('/api/excuse', async (req, res) => {
                     });
 
                 } catch (aiError) {
-                    console.error("GEMINI API ERROR:", aiError);
-                    // Fallback local system if API fails/key is missing
+                    console.error("GROQ API ERROR:", aiError);
                     const fallbackExcuse = `Unforeseen technical delay #${count + 1} occurred, holding up production progress.`;
                     db.run(`INSERT INTO excuses (user_id, excuse, absurdity) VALUES (?, ?, ?)`, [userId, fallbackExcuse, absurdity], () => {
                         res.json({ excuse: fallbackExcuse, history: [...history, fallbackExcuse] });
