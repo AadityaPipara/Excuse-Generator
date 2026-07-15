@@ -42,7 +42,14 @@ app.post('/api/excuse', async (req, res) => {
                 if (count >= 4) absurdity = "completely ridiculous, absurd, and unbelievable (like a flock of pigeons hijacking an auto-rickshaw)";
 
                 try {
-                    const model = ai.getGenerativeModel({ model: "gemini-3.5-flash" });
+                    const model = ai.getGenerativeModel({ 
+                        model: "gemini-3.5-flash", 
+                        generationConfig: {
+                            thinkingConfig: {
+                                effort: "low"
+                            }
+                        }
+                    });
                     const prompt = `Generate a unique, single-sentence excuse for being late or missing a deadline. 
                     The tone should be ${absurdity}. 
                     CRITICAL: Do not repeat any of these previous excuses: [${history.join(', ')}]. 
