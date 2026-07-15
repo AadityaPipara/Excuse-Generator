@@ -1,0 +1,73 @@
+body{
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: rgb(239, 239, 239);
+}
+
+.card{
+    background-color: white;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+    transition: transform 0.2s ease-in-out;
+}
+
+.card:hover{ 
+    transform: translateY(-3px);
+}
+
+h2{
+    font-size: 1.7em;
+    margin-bottom: 0;
+}
+
+p{
+    color: rgb(50, 50, 50);
+    font-size: 1.1em;
+    padding-bottom: 0;
+}
+
+input, button{
+    width: 100%;
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid rgb(100, 100, 100);
+    box-sizing: border-box;
+    border-radius: 5px;
+}
+
+button{
+    background-color: dodgerblue;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+}
+
+button:hover{
+    background-color: rgb(27, 124, 221);
+    transition: all 0.4s ease-in-out;
+}
+
+.excuse-box { 
+    background: #e9ecef; 
+    padding: 15px; 
+    border-left: 5px solid #28a745; 
+    margin: 20px 0; 
+    font-style: italic; 
+    display: none; 
+}
+
+ul{
+    list-style-type: none;
+    padding: 0;
+}
+
+li{
+    background-color: white;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #dedede;
+    border-radius: 4px;
+}

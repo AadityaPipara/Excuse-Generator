@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale= 1.0">
+    <title>Excuse Generator</title>
+    <link rel="icon" type="image/jpg" href="./favicon.jpg">
+    <link rel="stylesheet" href="./excuse generator.css">
+</head>
+
+<body>
+    <main>
+        <div class="card">
+            <div class="block one">
+                <h2>Excuse Generator 🤖</h2>
+                <p>Enter your name: </p>
+                <input type="text" id="username" placeholder="Your Name">
+                <button onclick="generateExcuse()">Generate Excuse</button>
+            </div>
+            <div class="excuse-box" id="excuseBox"></div>
+            <div class="block two">
+                <h3>Your Excuse History</h3>
+                <ul id="history"></ul>
+            </div>
+        </div>
+    </main>
+    <script src="./script.js"></script>
+</body>
+
+</html>
