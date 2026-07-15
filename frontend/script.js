@@ -9,7 +9,7 @@ async function generateExcuse() {
     const history = document.getElementById('history');
 
     try {
-        const response = await fetch('http://localhost:5000/api/excuse', {
+        const response = await fetch('https://excuse-generator-backend.onrender.com/api/excuse', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ name })
