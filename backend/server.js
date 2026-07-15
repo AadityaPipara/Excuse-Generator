@@ -73,4 +73,7 @@ app.post('/api/excuse', async (req, res) => {
     });
 });
 
+app.get('/', (req, res) => {
+    res.status(200).send("Excuse Generator Backend is awake!");
+});
 app.listen(5000, () => console.log('Server running on port 5000'));
