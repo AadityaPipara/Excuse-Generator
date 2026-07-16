@@ -2,7 +2,7 @@
 A full-stack AI-powered web application that generates creative excuses on demand using Google Gemini.
 
 ## Features
-- Generate unique excuses.
+- Generate unique excuses for  being late.
 - Built with HTML, CSS, and JavaScript.
 - Powered by Gemini API backend.
 
